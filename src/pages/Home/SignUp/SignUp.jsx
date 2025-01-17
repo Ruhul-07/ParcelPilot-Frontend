@@ -135,7 +135,7 @@ const SignUp = () => {
             </button>
           </div>
           <p className="flex justify-center p-4">
-            Already Have an account?<Link>Login</Link>
+            Already Have an account?<Link to="/login">Login</Link>
           </p>
         </div>
       </div>
