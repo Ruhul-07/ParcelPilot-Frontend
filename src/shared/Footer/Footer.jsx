@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-8">
-      <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center px-6">
+      <div className="container mx-auto flex flex-col lg:flex-row justify-evenly items-center px-6">
         {/* Logo and Description */}
         <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0">
         {/* <CiDeliveryTruck className="text-[#f2ae1c] text-5xl"  /> */}
