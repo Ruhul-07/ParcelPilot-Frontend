@@ -1,18 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import signupAnimation from "../../../../public/animation/signup.json";
 import { useForm } from "react-hook-form";
 import { RxExit } from "react-icons/rx";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const {createUser, updateUserProfile} = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const onSubmit = (data) => {
+    console.log(data)
+    createUser(data.email, data.password)
+    .then(result => {
+      const logedUser = result.user;
+      console.log(logedUser)
+      updateUserProfile(data.name, data.photoURL)
+      .then(() => {
+        reset()
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User created successfully.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    })
+  };
+    
   return (
     <>
       <div className="flex items-center gap-2 bg-base-200 pl-16 py-2">
@@ -136,7 +165,7 @@ const SignUp = () => {
               </div>
             </form>
             <div className="divider w-[326px] mx-auto">OR</div>
-            <div className="mt-6">
+            <div className="form-control mt-6">
               <button className="btn bg-primary text-background w-[326px] mx-auto">
                 Login With Google
               </button>

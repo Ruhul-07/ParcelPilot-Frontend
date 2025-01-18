@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../../public/animation/login.json";
 import { useForm } from "react-hook-form";
 import { RxExit } from "react-icons/rx";
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const {
@@ -10,8 +13,27 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const {signIn} = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    console.log(data)
+    signIn(data.email, data.password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+      Swal.fire({
+        title: "User Login Successful.",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
+      navigate("/")
+    })
+  };
 
   return (
      <>
@@ -76,7 +98,7 @@ const Login = () => {
 
             <div className="form-control mt-6">
               <button className="btn bg-primary text-background">
-                Sign Up
+                Sign In
               </button>
             </div>
           </form>

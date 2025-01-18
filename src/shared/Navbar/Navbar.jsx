@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/Parcelpilot-new-newest.png";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = ({ isLoggedIn, userName, userImage }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -59,7 +67,7 @@ const Navbar = ({ isLoggedIn, userName, userImage }) => {
         {/* Logout/Profile Area */}
         <div className="flex items-center gap-4">
           {/* Conditional Login/Profile */}
-          {isLoggedIn ? (
+          {user?.email ? (
             <div className="relative">
               <button
                 className="btn btn-ghost btn-circle avatar hover:scale-105 transition-transform"
@@ -70,7 +78,7 @@ const Navbar = ({ isLoggedIn, userName, userImage }) => {
               >
                 <div className="w-10 rounded-full">
                   <img
-                    src={userImage || "https://via.placeholder.com/40"}
+                    src={user?.photoURL || "https://via.placeholder.com/40"}
                     alt="Profile"
                   />
                 </div>
@@ -80,7 +88,7 @@ const Navbar = ({ isLoggedIn, userName, userImage }) => {
                   className="absolute right-0 mt-2 bg-base-100 shadow-md rounded-md p-3 w-48 z-10 animate-fadeIn"
                   onMouseLeave={() => setIsDropdownOpen(false)}
                 >
-                  <li className="font-bold">{userName || "User"}</li>
+                  <li className="font-bold p-2">{user?.displayName || "User"}</li>
                   <li>
                     <Link
                       to="/dashboard"
@@ -91,7 +99,7 @@ const Navbar = ({ isLoggedIn, userName, userImage }) => {
                   </li>
                   <li>
                     <Link
-                      to="/logout"
+                      onClick={handleLogOut}
                       className="block hover:bg-gray-100 p-2 rounded-md transition-all"
                     >
                       Logout
