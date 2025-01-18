@@ -1,4 +1,4 @@
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../../public/animation/login.json";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,9 @@ const Login = () => {
   } = useForm();
   const {signIn} = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmit = (data) => {
     console.log(data)
@@ -31,7 +34,7 @@ const Login = () => {
           popup: "animate__animated animate__fadeOutUp",
         },
       });
-      navigate("/")
+      navigate(from, { replace: true })
     })
   };
 

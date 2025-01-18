@@ -62,6 +62,14 @@ const Navbar = ({ isLoggedIn, userName, userImage }) => {
           >
             Contact
           </Link>
+
+          <Link
+            to="/secret"
+            className="btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300"
+            onClick={closeMobileMenu}
+          >
+            secret
+          </Link>
         </div>
 
         {/* Logout/Profile Area */}
