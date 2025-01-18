@@ -6,6 +6,7 @@ import { RxExit } from "react-icons/rx";
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxioxPublic";
 
 const Login = () => {
   const {
@@ -13,9 +14,10 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const {signIn} = useContext(AuthContext);
+  const {signIn, googleSignIn} = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosPublic = useAxiosPublic();
 
   const from = location.state?.from?.pathname || "/";
 
@@ -37,6 +39,24 @@ const Login = () => {
       navigate(from, { replace: true })
     })
   };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+    .then(result => {
+        console.log(result.user)
+        const userInfo = {
+            email: result.user?.email,
+            name: result.user?.displayName,
+            photoUrl: result.user?.photoURL,
+            role: "user"
+        }
+        axiosPublic.post('/users', userInfo)
+        .then(res => {
+            console.log(res.data);
+            navigate('/');
+        })
+    })
+}
 
   return (
      <>
@@ -109,7 +129,7 @@ const Login = () => {
             <div className="divider">
               OR
             </div>
-            <button className="btn bg-primary text-background w-full">Sign In With Google</button>
+            <button onClick={handleGoogleSignIn} className="btn bg-primary text-background w-full">Sign In With Google</button>
           </div>
           <p className="flex justify-center p-4">
             Already Have an account?<Link to="/signUp">SignUp</Link>

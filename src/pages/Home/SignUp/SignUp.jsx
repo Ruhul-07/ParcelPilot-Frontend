@@ -6,8 +6,10 @@ import { RxExit } from "react-icons/rx";
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../../hooks/useAxioxPublic";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const {createUser, updateUserProfile} = useContext(AuthContext);
+  const {createUser, googleSignIn, updateUserProfile} = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -26,21 +28,51 @@ const SignUp = () => {
       console.log(logedUser)
       updateUserProfile(data.name, data.photoURL)
       .then(() => {
-        reset()
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "User created successfully.",
-          showConfirmButton: false,
-          timer: 1500,
+        //create user entry in the database
+        const userInfo = {
+          name: data.name,
+          email: data.email,
+          photoUrl: data.photoURL,
+          role: data.role
+        };
+        axiosPublic.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            console.log("user added to the database");
+            reset();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "User created successfully.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigate("/");
+          }
         });
-        navigate("/");
       })
       .catch(error => {
         console.log(error)
-      })
-    })
+      });
+    });
   };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn()
+    .then(result => {
+        console.log(result.user)
+        const userInfo = {
+            email: result.user?.email,
+            name: result.user?.displayName,
+            photoUrl: result.user?.photoURL,
+            role: "user"
+        }
+        axiosPublic.post('/users', userInfo)
+        .then(res => {
+            console.log(res.data);
+            navigate('/');
+        })
+    })
+}
     
   return (
     <>
@@ -166,7 +198,7 @@ const SignUp = () => {
             </form>
             <div className="divider w-[326px] mx-auto">OR</div>
             <div className="form-control mt-6">
-              <button className="btn bg-primary text-background w-[326px] mx-auto">
+              <button onClick={handleGoogleSignIn} className="btn bg-primary text-background w-[326px] mx-auto">
                 Login With Google
               </button>
             </div>
