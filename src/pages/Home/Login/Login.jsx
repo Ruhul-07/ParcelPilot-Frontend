@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import loginAnimation from "../../../../public/animation/login.json";
 import { useForm } from "react-hook-form";
+import { RxExit } from "react-icons/rx";
 
 const Login = () => {
   const {
@@ -13,12 +14,17 @@ const Login = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
+     <>
+        <div className="flex items-center gap-2 bg-base-200 pl-16 pt-2">
+        <RxExit className="text-2xl text-blue-400" />
+        <Link to="/"><p className="text-3xl text-primary font-bold">Home</p></Link>
+        </div>
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="w-1/2 text-center lg:text-left">
+        <div className="w-full md:w-1/2 text-center lg:text-left">
           <Lottie className="p-10" animationData={loginAnimation}></Lottie>
         </div>
-        <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
+        <div className="card bg-base-100 w-full max-w-lg md:w-1/2 shrink-0 shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)} className="card-body">
             <h1 className="text-3xl text-center text-orange-400 font-bold">Welcome Back</h1>
             <h2 className="text-2xl text-center my-2 font-bold">Login Here</h2>
@@ -74,11 +80,11 @@ const Login = () => {
               </button>
             </div>
           </form>
-          <div className="divider w-[446px] mx-auto my-0">OR</div>
-          <div className="form-control mt-6">
-            <button className="btn bg-primary text-background w-[446px]  mx-auto">
-              Login With Google
-            </button>
+          <div className="w-5/6 mx-auto">
+            <div className="divider">
+              OR
+            </div>
+            <button className="btn bg-primary text-background w-full">Sign In With Google</button>
           </div>
           <p className="flex justify-center p-4">
             Already Have an account?<Link to="/signUp">SignUp</Link>
@@ -86,6 +92,7 @@ const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

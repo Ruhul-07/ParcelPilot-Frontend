@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import signupAnimation from "../../../../public/animation/signup.json";
 import { useForm } from "react-hook-form";
+import { RxExit } from "react-icons/rx";
 
 const SignUp = () => {
   const {
@@ -13,15 +14,22 @@ const SignUp = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="w-1/2 text-center lg:text-left">
-          <Lottie animationData={signupAnimation}></Lottie>
-        </div>
-        <div className="card bg-base-100 w-full max-w-lg shrink-0 shadow-2xl">
-          <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-            <h1 className="text-3xl text-center mb-5 font-bold">Sign Up</h1>
-            <div className="flex gap-4 w-full justify-center">
+    <>
+      <div className="flex items-center gap-2 bg-base-200 pl-16 py-2">
+        <RxExit className="text-2xl text-blue-400" />
+        <Link to="/">
+          <p className="text-3xl text-primary font-bold">Home</p>
+        </Link>
+      </div>
+
+      <div className="hero bg-base-200 min-h-screen">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+          <div className="w-full md:w-1/2 text-center lg:text-left">
+            <Lottie animationData={signupAnimation}></Lottie>
+          </div>
+          <div className="card bg-base-100 w-full max-w-lg md:w-1/2 shrink-0 shadow-2xl">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+              <h1 className="text-3xl text-center mb-5 font-bold">Sign Up</h1>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
@@ -61,9 +69,7 @@ const SignUp = () => {
                   </p>
                 )}
               </div>
-            </div>
 
-            <div className="flex gap-4 w-full justify-center">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password</span>
@@ -104,42 +110,44 @@ const SignUp = () => {
                   </p>
                 )}
               </div>
-            </div>
-            <label className="label">
-              <span className="label-text">Which account you like?</span>
-            </label>
-            <select
-              className="select select-bordered w-full"
-              {...register("role", { required: "Please select a role" })}
-            >
-              <option disabled value="">
-                Select Your Position
-              </option>
-              <option value="User">User</option>
-              <option value="Delivery Man">Delivery Man</option>
-            </select>
-            {errors.role && (
-              <p className="text-red-500 text-sm mt-1">{errors.role.message}</p>
-            )}
+              <label className="label">
+                <span className="label-text">Which account you like?</span>
+              </label>
+              <select
+                className="select select-bordered w-full"
+                {...register("role", { required: "Please select a role" })}
+              >
+                <option disabled value="">
+                  Select Your Position
+                </option>
+                <option value="User">User</option>
+                <option value="Delivery Man">Delivery Man</option>
+              </select>
+              {errors.role && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.role.message}
+                </p>
+              )}
 
-            <div className="form-control mt-6">
-              <button className="btn bg-primary text-background">
-                Sign Up
+              <div className="form-control mt-6">
+                <button className="btn bg-primary text-background">
+                  Sign Up
+                </button>
+              </div>
+            </form>
+            <div className="divider w-[326px] mx-auto">OR</div>
+            <div className="mt-6">
+              <button className="btn bg-primary text-background w-[326px] mx-auto">
+                Login With Google
               </button>
             </div>
-          </form>
-          <div className="divider w-[446px] mx-auto my-0">OR</div>
-          <div className="form-control mt-6">
-            <button className="btn bg-primary text-background w-[446px]  mx-auto">
-              Login With Google
-            </button>
+            <p className="flex justify-center p-4">
+              Already Have an account?<Link to="/login">Login</Link>
+            </p>
           </div>
-          <p className="flex justify-center p-4">
-            Already Have an account?<Link to="/login">Login</Link>
-          </p>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
