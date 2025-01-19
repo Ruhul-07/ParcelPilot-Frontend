@@ -7,6 +7,8 @@ import Secret from "../shared/Secret";
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from "../layouts/Dashboard";
 import BookParcel from "../pages/Dashboard/User/BookParcel/BookParcel";
+import MyParcels from "../pages/Dashboard/User/MyParcel/MyParcels";
+import UpdateParcel from "../pages/Dashboard/User/UpdateParcel/UpdateParcel";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
             {
                 path: 'book-parcel',
                 element: <BookParcel></BookParcel>
+            },
+            {
+                path: 'my-parcels',
+                element:<MyParcels></MyParcels>
+            },
+            {
+                path: 'updateParcel/:id',
+                element: <UpdateParcel></UpdateParcel>
             }
         ]
     }
