@@ -86,7 +86,7 @@ const MyParcels = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Navigate to the update page
-        navigate(`updateParcel/${parcelId}`);
+        navigate(`/dashboard/updateParcel/${parcelId}`);
       }
     });
   };
