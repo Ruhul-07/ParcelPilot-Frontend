@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/Parcelpilot-new-newest.png";
 import { AuthContext } from "../../providers/AuthProvider";
 
-const Navbar = ({ isLoggedIn, userName, userImage }) => {
+const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
+  console.log(user)
 
   const handleLogOut = () => {
     logOut()

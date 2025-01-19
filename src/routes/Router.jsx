@@ -5,6 +5,8 @@ import SignUp from "../pages/Home/SignUp/SignUp";
 import Login from "../pages/Home/Login/Login";
 import Secret from "../shared/Secret";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../layouts/Dashboard";
+import BookParcel from "../pages/Dashboard/User/BookParcel/BookParcel";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +28,16 @@ const router = createBrowserRouter([
             {
                 path: 'secret',
                 element: <PrivateRoute><Secret></Secret></PrivateRoute>
+            }
+        ]
+    },
+    {
+        path: "dashboard",
+        element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        children: [
+            {
+                path: 'book-parcel',
+                element: <BookParcel></BookParcel>
             }
         ]
     }

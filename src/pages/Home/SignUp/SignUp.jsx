@@ -181,8 +181,8 @@ const SignUp = () => {
                 <option disabled value="">
                   Select Your Position
                 </option>
-                <option value="User">User</option>
-                <option value="Delivery Man">Delivery Man</option>
+                <option value="user">User</option>
+                <option value="deliveryMan">Delivery Man</option>
               </select>
               {errors.role && (
                 <p className="text-red-500 text-sm mt-1">
