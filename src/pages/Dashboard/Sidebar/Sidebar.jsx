@@ -49,7 +49,9 @@ const Sidebar = ({ role }) => {
         path: "/dashboard/all-parcels",
         icon: <BsFillBoxFill />,
       },
-      { name: "All Users", path: "/dashboard/all-users", icon: <FaUserAlt /> },
+      { name: "All Users",
+        path: "/dashboard/all-users", 
+        icon: <FaUserAlt /> },
       {
         name: "All Delivery Men",
         path: "/dashboard/all-delivery-men",
