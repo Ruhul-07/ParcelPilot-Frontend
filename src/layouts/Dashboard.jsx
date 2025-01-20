@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import axios from "axios";
 import useAxiosPublic from "../hooks/useAxioxPublic";
 import Sidebar from "../pages/Dashboard/Sidebar/Sidebar";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +7,6 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  // console.log("getuser", user);
   const [newUser, setNewUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -21,7 +19,7 @@ const Dashboard = () => {
         return null;
       }
       const res = await axiosPublic.get(`/users/${user.email}`);
-      console.log("API Response in queryFn:", res.data); 
+      // console.log("API Response in queryFn:", res.data); 
       setNewUser(res.data.role)
       return res.data;
     },

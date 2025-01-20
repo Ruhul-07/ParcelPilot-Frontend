@@ -1,0 +1,17 @@
+{
+  "_id": { "$oid": "678d4497b4a9bf37457ca6fe" },
+  "phoneNumber": "01600000000",
+  "parcelType": "Dragon Fruit",
+  "parcelWeight": "3",
+  "receiverName": "Robiul",
+  "receiverPhone": "0160000000",
+  "requestedDate": "2025-01-22",
+  "latitude": "6567",
+  "longitude": "6564",
+  "deliveryAddress": "natore",
+  "name": "Md.Ruhul Amin",
+  "email": "ruhulbabu2015@gmail.com",
+  "price": { "$numberInt": "150" },
+  "status": "pending",
+  "bookingDate": { "$date": { "$numberLong": "1737311383061" } }
+}

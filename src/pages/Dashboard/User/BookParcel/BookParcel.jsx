@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const BookParcel = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   
@@ -25,8 +27,8 @@ const BookParcel = () => {
   const onSubmit = async (data) => {
     const bookingData = {
       ...data,
-      name: user?.displayName,
-      email: user?.email,
+      booksUsersName: user?.displayName,
+      booksUserEmail: user?.email,
       price: calculatePrice(),
       status: "pending",
     };
@@ -34,13 +36,22 @@ const BookParcel = () => {
 
     try {
       const response = await axiosPublic.post("/bookingParcels", bookingData);
-      if (response.status === 201) {
-        alert("Parcel booked successfully!");
-        // Optionally reset the form or redirect
+      console.log("Response:", response);
+      if (response.status >= 200 && response.status < 300) {
+        await Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Parcel booked successfully!",
+        });
+        navigate("/dashboard/my-parcels")
       }
     } catch (error) {
       console.error("Error booking parcel:", error);
-      alert("There was an error booking the parcel.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "There was an error booking the parcel.",
+      });
     }
   };
 

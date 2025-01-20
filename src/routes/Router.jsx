@@ -13,6 +13,8 @@ import MyProfile from "../pages/Dashboard/User/MyProfile/MyProfile";
 import AllDeliveryMen from "../pages/Dashboard/Admin/AllDeliveryMen/AllDeliveryMen";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import Statistics from "../pages/Dashboard/Admin/Statistics/Statistics";
+import MyDeliveryList from "../pages/Dashboard/DeliveryMen/MyDeliveryList/MyDeliveryList";
+import AllParcels from "../pages/Dashboard/Admin/AllParcels/AllParcels";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +60,10 @@ const router = createBrowserRouter([
                 element: <MyProfile></MyProfile>
             },
             {
+                path: 'all-parcels',
+                element: <AllParcels></AllParcels>
+            },
+            {
                 path: 'all-delivery-men',
                 element: <AllDeliveryMen></AllDeliveryMen>
             },
@@ -68,6 +74,10 @@ const router = createBrowserRouter([
             {
                 path: 'statistics',
                 element: <Statistics></Statistics>
+            },
+            {
+                path: 'my-delivery-list',
+                element: <MyDeliveryList></MyDeliveryList>
             }
         ]
     }
