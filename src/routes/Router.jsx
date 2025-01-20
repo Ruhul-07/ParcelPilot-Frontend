@@ -9,6 +9,7 @@ import Dashboard from "../layouts/Dashboard";
 import BookParcel from "../pages/Dashboard/User/BookParcel/BookParcel";
 import MyParcels from "../pages/Dashboard/User/MyParcel/MyParcels";
 import UpdateParcel from "../pages/Dashboard/User/UpdateParcel/UpdateParcel";
+import MyProfile from "../pages/Dashboard/User/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
             {
                 path: 'updateParcel/:id',
                 element: <UpdateParcel></UpdateParcel>
+            },
+            {
+                path: 'my-profile',
+                element: <MyProfile></MyProfile>
             }
         ]
     }
