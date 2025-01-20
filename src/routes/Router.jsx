@@ -12,6 +12,7 @@ import UpdateParcel from "../pages/Dashboard/User/UpdateParcel/UpdateParcel";
 import MyProfile from "../pages/Dashboard/User/MyProfile/MyProfile";
 import AllDeliveryMen from "../pages/Dashboard/Admin/AllDeliveryMen/AllDeliveryMen";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
+import Statistics from "../pages/Dashboard/Admin/Statistics/Statistics";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
             {
                 path: 'all-users',
                 element: <AllUsers></AllUsers>
+            },
+            {
+                path: 'statistics',
+                element: <Statistics></Statistics>
             }
         ]
     }
