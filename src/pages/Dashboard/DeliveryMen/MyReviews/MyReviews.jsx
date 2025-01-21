@@ -2,19 +2,21 @@ import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AuthContext } from "../../../../providers/AuthProvider";
+import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
 
   // Fetch reviews for the logged-in delivery man
   const { data = [], error, isLoading } = useQuery({
     queryKey: ["reviews", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`/users/${user?.email}`);
+      const res = await axiosPublic.get(`/users/${user?.email}`);
       const deliveryManId = res.data._id;
-      const reviewsRes = await axios.get(`/reviews/delivery-man/${deliveryManId}`);
-      const reviews = reviewsRes.data || []; // Ensure it's an array
-      return reviews; // Make sure to return the array
+      const reviewsRes = await axiosPublic.get(`/reviews/delivery-man/${deliveryManId}`);
+      const reviews = reviewsRes.data || [];
+      return reviews;
     },
     enabled: !!user?.email, // Only run the query if the user is authenticated
   });
