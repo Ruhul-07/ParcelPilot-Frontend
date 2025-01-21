@@ -37,7 +37,7 @@ const MyDeliveryList = () => {
       text: `Do you want to mark this parcel as ${status}?`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, update it!',
+      confirmButtonText: 'Yes, Delivered it!',
       cancelButtonText: 'No, cancel',
     });
     if (!isConfirmed) return;
@@ -45,7 +45,7 @@ const MyDeliveryList = () => {
 
     try {
       await axiosPublic.patch(`/parcels/${id}`, { status });
-      Swal.fire('Updated!', 'The parcel status has been updated.', 'success');
+      Swal.fire('Updated!', 'The parcel was delivered successfully.', 'success');
     } catch (error) {
       console.error(`Error updating parcel status to ${status}:`, error);
       Swal.fire('Error!', 'There was an issue updating the parcel status.', 'error');

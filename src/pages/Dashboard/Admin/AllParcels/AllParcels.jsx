@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 
 const AllParcels = () => {
   const [parcels, setParcels] = useState([]);
   const [deliveryMen, setDeliveryMen] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
   const [selectedDeliveryMan, setSelectedDeliveryMan] = useState("");
-  const [approxDeliveryDate, setApproxDeliveryDate] = useState("");
+  const today = new Date().toISOString().split("T")[0];
+  const [approximateDeliveryDate, setApproximateDeliveryDate] = useState(today);
   const [loading, setLoading] = useState(false); // To manage loading state
-
+  const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
 
   // Fetch parcels
   const fetchParcels = async () => {
     setLoading(true);
     try {
-      const { data } = await axiosPublic.get("/parcels");
+      const { data } = await axiosSecure.get("/parcels");
       setParcels(data);
     } catch (error) {
       console.error("Error fetching parcels:", error);
@@ -26,27 +28,14 @@ const AllParcels = () => {
     }
   };
 
-  // // Fetch delivery men (filter by role "delivery man")
-  // const fetchDeliveryMen = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const { data } = await axiosPublic.get("/delivery-men");
-  //     setDeliveryMen(data);
-  //   } catch (error) {
-  //     console.error("Error fetching delivery men:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const fetchDeliveryMen = async () => {
     setLoading(true);
     try {
-      const { data } = await axiosPublic.get("/users"); // Assuming you have a /users endpoint
+      const { data } = await axiosSecure.get("/users");
       const deliveryMenData = data.users.filter(
         (user) => user.role === "deliveryMan"
       ); // Filter users with role "delivery man"
-      console.log("Filtered Delivery Men Data:", deliveryMenData); // Check the filtered data
+      console.log("Filtered Delivery Men Data:", deliveryMenData);
       setDeliveryMen(deliveryMenData);
     } catch (error) {
       console.error("Error fetching delivery men:", error);
@@ -56,7 +45,7 @@ const AllParcels = () => {
   };
 
   const assignParcel = async () => {
-    if (!selectedDeliveryMan || !approxDeliveryDate) {
+    if (!selectedDeliveryMan || !approximateDeliveryDate) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -69,7 +58,7 @@ const AllParcels = () => {
       await axiosPublic.patch(`/parcels/${selectedParcel._id}`, {
         status: "On The Way",
         deliveryManId: selectedDeliveryMan,
-        approxDeliveryDate,
+        approximateDeliveryDate,
       });
 
       Swal.fire({
@@ -176,15 +165,15 @@ const AllParcels = () => {
               <input
                 type="date"
                 className="border rounded px-3 py-2 w-full"
-                value={approxDeliveryDate}
-                onChange={(e) => setApproxDeliveryDate(e.target.value)}
+                value={approximateDeliveryDate}
+                onChange={(e) => setApproximateDeliveryDate(e.target.value)}
               />
             </div>
             <div className="flex space-x-4">
               <button
                 className="bg-green-500 text-white px-3 py-1 rounded"
                 onClick={assignParcel}
-                disabled={!selectedDeliveryMan || !approxDeliveryDate}
+                disabled={!selectedDeliveryMan || !approximateDeliveryDate}
               >
                 Assign
               </button>

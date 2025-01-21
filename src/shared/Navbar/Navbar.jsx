@@ -23,7 +23,7 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
   return (
-    <nav className="bg-sky-200 bg-opacity-90 shadow-md sticky top-0 z-20">
+    <nav className="bg-base-100 bg-opacity-90 shadow-md sticky top-0 z-20">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo Area */}
         <div className="flex items-center gap-2">

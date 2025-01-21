@@ -20,7 +20,7 @@ const defaultProfileImg = "./../../public/default_img.jpg";
   }, []);
 
   return (
-    <section className="mt-12">
+    <section className="mt-12 mb-10">
       <h2 className="text-3xl font-semibold text-center mb-8">Top Delivery Men</h2>
       <div className="flex justify-around">
         {topDeliveryMen.map((deliveryMan, index) => (

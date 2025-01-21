@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import useAxiosPublic from '../../../../hooks/useAxioxPublic';
+import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
@@ -15,7 +15,7 @@ const AllUsers = () => {
 
   const fetchUsers = async (page) => {
     try {
-      const { data } = await axiosPublic.get(`/users?page=${page}&limit=${limit}`);
+      const { data } = await axiosSecure.get(`/users?page=${page}&limit=${limit}`);
       setUsers(data.users);
       setTotalPages(data.totalPages);
     } catch (err) {
@@ -25,7 +25,7 @@ const AllUsers = () => {
 
   const handleRoleChange = async (userId, role) => {
     try {
-      await axiosPublic.patch(`/users/${userId}`, { role });
+      await axiosSecure.patch(`/users/${userId}`, { role });
       Swal.fire('Success', `User role changed to ${role}`, 'success');
       fetchUsers(currentPage); // Refresh the data
     } catch (err) {

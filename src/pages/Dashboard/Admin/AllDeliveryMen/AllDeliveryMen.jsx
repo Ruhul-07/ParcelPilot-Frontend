@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const AllDeliveryMen = () => {
   const [deliveryMen, setDeliveryMen] = useState([]);
   const [loading, setLoading] = useState(true);
+  const axiosSecure =useAxiosSecure();
 
   useEffect(() => {
-    const axiosPublic = useAxiosPublic();
     const fetchDeliveryMen = async () => {
       try {
-        const response = await axiosPublic.get("/delivery-men");
+        const response = await axiosSecure.get("/delivery-men");
         setDeliveryMen(response.data);
         setLoading(false);
       } catch (error) {
