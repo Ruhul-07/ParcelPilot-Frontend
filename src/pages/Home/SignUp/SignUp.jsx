@@ -3,7 +3,7 @@ import Lottie from "lottie-react";
 import signupAnimation from "../../../../public/animation/signup.json";
 import { useForm } from "react-hook-form";
 import { RxExit } from "react-icons/rx";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../hooks/useAxioxPublic";
@@ -15,10 +15,30 @@ const SignUp = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    watch,
   } = useForm();
 
   const {createUser, googleSignIn, updateUserProfile} = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [passwordFeedback, setPasswordFeedback] = useState("");
+  const passwordValue = watch("password", "");
+
+  const handlePasswordChange = (password) => {
+    const rules = [
+      { regex: /.{6,}/, message: "At least 6 characters" },
+      { regex: /[A-Z]/, message: "At least one uppercase letter" },
+      { regex: /[a-z]/, message: "At least one lowercase letter" },
+      { regex: /\d/, message: "At least one number" },
+      { regex: /[@$!%*?&]/, message: "At least one special character (@$!%*?&)" },
+    ];
+
+    const feedback = rules
+      .filter((rule) => !rule.regex.test(password))
+      .map((rule) => rule.message);
+
+    setPasswordFeedback(feedback.length ? feedback.join(", ") : "Password looks good!");
+  };
 
   const onSubmit = (data) => {
     console.log(data)
@@ -145,7 +165,13 @@ const SignUp = () => {
                       value: 6,
                       message: "Password must be at least 6 characters",
                     },
+                    pattern: {
+                      value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,
+                      message:
+                        "Password must contain at least one uppercase, one lowercase, one number, and one special character",
+                    },
                   })}
+                  onChange={(e) => handlePasswordChange(e.target.value)}
                 />
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">
