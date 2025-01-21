@@ -1,7 +1,11 @@
+import Banner from "../../../components/Banner";
+import OurFeatures from "../../../components/OurFeatures";
+
 const Home = () => {
     return (
         <div className="min-h-screen">
-            <h2>This is home</h2>
+            <Banner></Banner>
+            <OurFeatures></OurFeatures>
         </div>
     );
 };
