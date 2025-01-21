@@ -34,8 +34,8 @@ const ReviewModal = ({ isOpen, onClose, parcel, refetch }) => {
 
       if (response.status === 201) {
         Swal.fire("Success", "Review submitted successfully!", "success");
-        onClose(); // Close the modal
-        refetch(); // Refresh the parcel list
+        onClose(); 
+        refetch(); 
       }
     } catch (error) {
       console.error("Error submitting review:", error);
