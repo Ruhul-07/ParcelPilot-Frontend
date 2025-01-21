@@ -14,6 +14,7 @@ const Statistics = () => {
     try {
       const bookingsResponse = await axiosPublic.get('/bookings-by-date');
       const comparisonResponse = await axiosPublic.get('/comparison-booked-delivered');
+      console.log(comparisonResponse)
 
       // Check if data is valid and not empty
       if (bookingsResponse.data && comparisonResponse.data) {

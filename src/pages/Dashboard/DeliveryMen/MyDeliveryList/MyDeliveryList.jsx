@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import Swal from "sweetalert2";
 
 const MyDeliveryList = () => {
   const { user } = useContext(AuthContext);
@@ -30,16 +31,24 @@ const MyDeliveryList = () => {
   });
 
   const updateParcelStatus = async (id, status) => {
-    const confirmAction = window.confirm(
-      `Are you sure you want to mark this parcel as ${status}?`
-    );
-    if (!confirmAction) return;
+
+    const { isConfirmed } = await Swal.fire({
+      title: `Are you sure?`,
+      text: `Do you want to mark this parcel as ${status}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'No, cancel',
+    });
+    if (!isConfirmed) return;
+
 
     try {
       await axiosPublic.patch(`/parcels/${id}`, { status });
-      // Optionally, trigger a refetch of the data or update the UI here
+      Swal.fire('Updated!', 'The parcel status has been updated.', 'success');
     } catch (error) {
       console.error(`Error updating parcel status to ${status}:`, error);
+      Swal.fire('Error!', 'There was an issue updating the parcel status.', 'error');
     }
   };
 

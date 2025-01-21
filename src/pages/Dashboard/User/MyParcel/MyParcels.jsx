@@ -1,20 +1,29 @@
-import React, { useContext, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import Swal from 'sweetalert2';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../../providers/AuthProvider';
-import useAxiosPublic from '../../../../hooks/useAxioxPublic';
+import React, { useContext, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../../providers/AuthProvider";
+import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import ReviewModal from "../../../../components/ReviewModal";
 
 const MyParcels = () => {
   const { user } = useContext(AuthContext);
-  const axiosPublic =useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
+
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [selectedParcel, setSelectedParcel] = useState(null);
 
   // Fetch parcels for the logged-in user
-  const { data: parcels = [], refetch, isLoading, isError } = useQuery({
-    queryKey: ['myParcels', user?.email],
+  const {
+    data: parcels = [],
+    refetch,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["myParcels", user?.email],
     queryFn: async () => {
       const response = await axiosPublic.get(`/myParcels/${user?.email}`);
       return response.data;
@@ -22,36 +31,43 @@ const MyParcels = () => {
   });
 
   // filtering system
-const filteredParcels = parcels.filter((parcel) => {
-  // If no filter is selected, return all parcels
-  if (!filter || filter === "All") {
-    return true;
-  }
+  const filteredParcels = parcels.filter((parcel) => {
+    // If no filter is selected, return all parcels
+    if (!filter || filter === "All") {
+      return true;
+    }
 
-  // Filter parcels based on status, case-insensitive
-  return parcel.status.toLowerCase() === filter.toLowerCase();
-});
+    // Filter parcels based on status, case-insensitive
+    return parcel.status.toLowerCase() === filter.toLowerCase();
+  });
 
   // Handle Cancel
   const handleCancel = async (parcelId) => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'This action cannot be undone.',
-      icon: 'warning',
+      title: "Are you sure?",
+      text: "This action cannot be undone.",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Yes, cancel it!',
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, cancel it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.patch(`http://localhost:5000/parcels/${parcelId}`, { status: 'canceled' });
+          const response = await axios.patch(
+            `http://localhost:5000/parcels/${parcelId}`,
+            { status: "canceled" }
+          );
           if (response.status === 200) {
-            Swal.fire('Canceled!', 'Your parcel has been canceled successfully.', 'success');
+            Swal.fire(
+              "Canceled!",
+              "Your parcel has been canceled successfully.",
+              "success"
+            );
             refetch();
           }
         } catch (error) {
-          Swal.fire('Error!', 'Failed to cancel the parcel.', 'error');
+          Swal.fire("Error!", "Failed to cancel the parcel.", "error");
         }
       }
     });
@@ -62,13 +78,33 @@ const filteredParcels = parcels.filter((parcel) => {
     navigate(`/dashboard/updateParcel/${parcelId}`);
   };
 
+  // // Handle Review (when status is Delivered)
+  // const handleReview = (parcelId) => {
+  //   Swal.fire("Review", `Leave a review for parcel ${parcelId}`, "info");
+  //   // You can open a modal or navigate to the review page
+  // };
+
+  const handleReview = (parcel) => {
+    console.log(parcel)
+    setSelectedParcel(parcel); // Set the parcel data
+    setIsReviewModalOpen(true); // Open the modal
+  };
+
+  // Handle Pay Button (for delivered or pending parcels)
+  const handlePay = (parcelId) => {
+    Swal.fire("Payment", `Proceed with payment for parcel ${parcelId}`, "info");
+    // Open a payment modal or integrate a payment gateway
+  };
+
   return (
     <div className="p-8">
       <h2 className="text-xl font-bold my-5 text-center">My Parcels</h2>
 
       {/* Filter Dropdown */}
       <div className="flex justify-end mb-4">
-        <label htmlFor="filter" className="mr-2 font-medium">Filter by Status:</label>
+        <label htmlFor="filter" className="mr-2 font-medium">
+          Filter by Status:
+        </label>
         <select
           id="filter"
           className="border rounded px-2 py-1"
@@ -100,30 +136,63 @@ const filteredParcels = parcels.filter((parcel) => {
           {filteredParcels.map((parcel) => (
             <tr key={parcel._id}>
               <td className="border px-4 py-2">{parcel.parcelType}</td>
-              <td className="border px-4 py-2">{new Date(parcel.requestedDate).toLocaleDateString()}</td>
-              <td className="border px-4 py-2">{new Date(parcel.bookingDate).toLocaleDateString()}</td>
-              <td className="border px-4 py-2">{parcel.deliveryMenId || 'Not Assigned'}</td>
+              <td className="border px-4 py-2">
+                {new Date(parcel.requestedDate).toLocaleDateString()}
+              </td>
+              <td className="border px-4 py-2">
+                {new Date(parcel.bookingDate).toLocaleDateString()}
+              </td>
+              <td className="border px-4 py-2">
+                {parcel.deliveryManId || "Not Assigned"}
+              </td>
               <td className="border px-4 py-2">{parcel.status}</td>
               <td className="border px-4 py-2">
                 <button
                   className="bg-blue-500 text-white px-4 py-1 rounded"
-                  disabled={parcel.status !== 'pending'}
+                  disabled={parcel.status !== "pending"}
                   onClick={() => handleUpdate(parcel._id)}
                 >
                   Update
                 </button>
                 <button
                   className="bg-red-500 text-white px-4 py-1 rounded ml-2"
-                  disabled={parcel.status !== 'pending'}
+                  disabled={parcel.status !== "pending"}
                   onClick={() => handleCancel(parcel._id)}
                 >
                   Cancel
                 </button>
+                {/* Review Button (only if status is delivered) */}
+                {parcel.status === "Delivered" && (
+                  <button
+                    className="bg-yellow-500 text-white px-4 py-1 rounded ml-2"
+                    onClick={() => handleReview(parcel)}
+                  >
+                    Review
+                  </button>
+                )}
+
+                {/* Pay Button (can be added for delivered or pending parcels) */}
+                {(parcel.status === "delivered" ||
+                  parcel.status === "pending") && (
+                  <button
+                    className="bg-green-500 text-white px-4 py-1 rounded ml-2"
+                    onClick={() => handleReview(parcel.deliveryManId)}
+                  >
+                    Pay
+                  </button>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {/* Review Modal */}
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        parcel={selectedParcel}
+        refetch={refetch}
+      />
     </div>
   );
 };
