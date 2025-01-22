@@ -17,6 +17,7 @@ import MyDeliveryList from "../pages/Dashboard/DeliveryMen/MyDeliveryList/MyDeli
 import AllParcels from "../pages/Dashboard/Admin/AllParcels/AllParcels";
 import MyReviews from "../pages/Dashboard/DeliveryMen/MyReviews/MyReviews";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/PaymentSuccess/PaymentSuccess";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             {
                 path: "payment",
                 element: <Payment></Payment>
+            },
+            {
+                path: "payment-success",
+                element: <PaymentSuccess></PaymentSuccess>
             },
 
             // Admin Route Only

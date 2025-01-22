@@ -30,6 +30,8 @@ const MyParcels = () => {
     },
   });
 
+  console.log(parcels)
+
   // filtering system
   const filteredParcels = parcels.filter((parcel) => {
     // If no filter is selected, return all parcels
@@ -174,7 +176,7 @@ const MyParcels = () => {
                   {/* Pay Button (can be added for delivered or pending parcels) */}
                   {(parcel.status === "Delivered" ||
                     parcel.status === "pending") && (
-                    <Link to="/dashboard/payment" className="bg-green-500 text-white text-center px-4 py-1 rounded w-full">
+                    <Link  state={{ parcel }} to="/dashboard/payment" className="bg-green-500 text-white text-center px-4 py-1 rounded w-full">
                         Pay
                     </Link>
                   )}
