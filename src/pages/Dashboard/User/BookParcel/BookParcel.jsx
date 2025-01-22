@@ -1,17 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Modal } from "react-responsive-modal"; // For modal
+import "react-responsive-modal/styles.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet"; // For map
 
 const BookParcel = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false); // State for modal visibility
+  const [lat, setLat] = useState(null); // Store latitude for the map
+  const [lng, setLng] = useState(null); // Store longitude for the map
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   // Watching the parcel weight to calculate price
   const parcelWeight = watch("parcelWeight");
 
@@ -32,7 +43,7 @@ const BookParcel = () => {
       price: calculatePrice(),
       status: "pending",
     };
-    console.log(bookingData)
+    console.log(bookingData);
 
     try {
       const response = await axiosPublic.post("/bookingParcels", bookingData);
@@ -43,7 +54,7 @@ const BookParcel = () => {
           title: "Success",
           text: "Parcel booked successfully!",
         });
-        navigate("/dashboard/my-parcels")
+        navigate("/dashboard/my-parcels");
       }
     } catch (error) {
       console.error("Error booking parcel:", error);
@@ -55,10 +66,35 @@ const BookParcel = () => {
     }
   };
 
+  // Show map in the modal when the user clicks the button
+  const handleModalOpen = () => {
+    const latInput = parseFloat(watch("latitude")) || 23.8103; // Fallback to default if invalid
+    const lngInput = parseFloat(watch("longitude")) || 90.4125; // Fallback to default if invalid
+    setLat(latInput);
+    setLng(lngInput);
+    setOpenModal(true); // Open the modal
+  };
+
+  const handleModalClose = () => setOpenModal(false); // Close the modal
+
+  useEffect(() => {
+    if (openModal) {
+      setTimeout(() => {
+        const map = document.querySelector(".leaflet-container");
+        if (map) {
+          map.invalidateSize(); // Ensure the map is resized after modal opens
+        }
+      }, 100);
+    }
+  }, [openModal]); // Dependency on openModal to trigger when the modal opens
+
   return (
     <div className="container mx-auto py-8">
       <h2 className="text-2xl font-bold mb-6">Book a Parcel</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
         {/* Name (Read-only) */}
         <div>
           <label className="block text-sm font-medium mb-1">Name</label>
@@ -86,10 +122,14 @@ const BookParcel = () => {
           <label className="block text-sm font-medium mb-1">Phone Number</label>
           <input
             type="tel"
-            {...register("phoneNumber", { required: "Phone number is required" })}
+            {...register("phoneNumber", {
+              required: "Phone number is required",
+            })}
             className="input input-bordered w-full"
           />
-          {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>}
+          {errors.phoneNumber && (
+            <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>
+          )}
         </div>
 
         {/* Parcel Type */}
@@ -100,77 +140,133 @@ const BookParcel = () => {
             {...register("parcelType", { required: "Parcel type is required" })}
             className="input input-bordered w-full"
           />
-          {errors.parcelType && <p className="text-red-500 text-sm">{errors.parcelType.message}</p>}
+          {errors.parcelType && (
+            <p className="text-red-500 text-sm">{errors.parcelType.message}</p>
+          )}
         </div>
 
         {/* Parcel Weight */}
         <div>
-          <label className="block text-sm font-medium mb-1">Parcel Weight (kg)</label>
+          <label className="block text-sm font-medium mb-1">
+            Parcel Weight (kg)
+          </label>
           <input
             type="number"
             {...register("parcelWeight", {
               required: "Parcel weight is required",
               min: { value: 1, message: "Weight must be at least 1 kg" },
-              validate: (value) => value > 0 || "Weight must be greater than 0 kg",
+              validate: (value) =>
+                value > 0 || "Weight must be greater than 0 kg",
             })}
             className="input input-bordered w-full"
           />
-          {errors.parcelWeight && <p className="text-red-500 text-sm">{errors.parcelWeight.message}</p>}
+          {errors.parcelWeight && (
+            <p className="text-red-500 text-sm">
+              {errors.parcelWeight.message}
+            </p>
+          )}
         </div>
 
         {/* Receiver’s Name */}
         <div>
-          <label className="block text-sm font-medium mb-1">Receiver’s Name</label>
+          <label className="block text-sm font-medium mb-1">
+            Receiver’s Name
+          </label>
           <input
             type="text"
-            {...register("receiverName", { required: "Receiver's name is required" })}
+            {...register("receiverName", {
+              required: "Receiver's name is required",
+            })}
             className="input input-bordered w-full"
           />
-          {errors.receiverName && <p className="text-red-500 text-sm">{errors.receiverName.message}</p>}
+          {errors.receiverName && (
+            <p className="text-red-500 text-sm">
+              {errors.receiverName.message}
+            </p>
+          )}
         </div>
 
         {/* Receiver’s Phone Number */}
         <div>
-          <label className="block text-sm font-medium mb-1">Receiver's Phone Number</label>
+          <label className="block text-sm font-medium mb-1">
+            Receiver's Phone Number
+          </label>
           <input
             type="tel"
-            {...register("receiverPhone", { required: "Receiver's phone number is required" })}
+            {...register("receiverPhone", {
+              required: "Receiver's phone number is required",
+            })}
             className="input input-bordered w-full"
           />
-          {errors.receiverPhone && <p className="text-red-500 text-sm">{errors.receiverPhone.message}</p>}
+          {errors.receiverPhone && (
+            <p className="text-red-500 text-sm">
+              {errors.receiverPhone.message}
+            </p>
+          )}
         </div>
 
         {/* Requested Delivery Date */}
         <div>
-          <label className="block text-sm font-medium mb-1">Requested Delivery Date</label>
+          <label className="block text-sm font-medium mb-1">
+            Requested Delivery Date
+          </label>
           <input
             type="date"
-            {...register("requestedDate", { required: "Requested delivery date is required" })}
+            {...register("requestedDate", {
+              required: "Requested delivery date is required",
+            })}
             className="input input-bordered w-full"
           />
-          {errors.requestedDate && <p className="text-red-500 text-sm">{errors.requestedDate.message}</p>}
+          {errors.requestedDate && (
+            <p className="text-red-500 text-sm">
+              {errors.requestedDate.message}
+            </p>
+          )}
         </div>
 
         {/* Latitude */}
         <div>
-          <label className="block text-sm font-medium mb-1">Delivery Address Latitude</label>
+          <label className="block text-sm font-medium mb-1">
+            Delivery Address Latitude
+          </label>
           <input
             type="text"
             {...register("latitude", { required: "Latitude is required" })}
             className="input input-bordered w-full"
+            placeholder="Enter Latitude" // Placeholder to guide the user
+            defaultValue="23.8103" //
           />
-          {errors.latitude && <p className="text-red-500 text-sm">{errors.latitude.message}</p>}
+          {errors.latitude && (
+            <p className="text-red-500 text-sm">{errors.latitude.message}</p>
+          )}
         </div>
 
         {/* Longitude */}
         <div>
-          <label className="block text-sm font-medium mb-1">Delivery Address Longitude</label>
+          <label className="block text-sm font-medium mb-1">
+            Delivery Address Longitude
+          </label>
           <input
             type="text"
             {...register("longitude", { required: "Longitude is required" })}
             className="input input-bordered w-full"
+            placeholder="Enter Longitude" // Placeholder to guide the user
+            defaultValue="90.4125" // Default Longitude (for example)
           />
-          {errors.longitude && <p className="text-red-500 text-sm">{errors.longitude.message}</p>}
+          {errors.longitude && (
+            <p className="text-red-500 text-sm">{errors.longitude.message}</p>
+          )}
+        </div>
+
+        {/* Button to open the map modal */}
+        <div className="md:col-span-2">
+          <button
+            type="button"
+            onClick={handleModalOpen}
+            className="btn bg-orange-400 w-full mt-4"
+          >
+            Show Delivery Location on Map
+          </button>
         </div>
 
         {/* Price (Auto-Calculated) */}
@@ -186,12 +282,20 @@ const BookParcel = () => {
 
         {/* Parcel Delivery Address */}
         <div>
-          <label className="block text-sm font-medium mb-1">Parcel Delivery Address</label>
+          <label className="block text-sm font-medium mb-1">
+            Parcel Delivery Address
+          </label>
           <textarea
-            {...register("deliveryAddress", { required: "Delivery address is required" })}
+            {...register("deliveryAddress", {
+              required: "Delivery address is required",
+            })}
             className="textarea textarea-bordered w-full"
           ></textarea>
-          {errors.deliveryAddress && <p className="text-red-500 text-sm">{errors.deliveryAddress.message}</p>}
+          {errors.deliveryAddress && (
+            <p className="text-red-500 text-sm">
+              {errors.deliveryAddress.message}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
@@ -201,6 +305,23 @@ const BookParcel = () => {
           </button>
         </div>
       </form>
+      {/* Modal for Map */}
+      <Modal open={openModal} onClose={handleModalClose} center>
+        <h3 className="text-xl font-bold mb-4">Delivery Location</h3>
+        <MapContainer
+          center={[lat, lng]}
+          zoom={13}
+          style={{
+            width: "100%", // Full width of modal
+            height: "400px", // Ensure a fixed height for the map
+          }}
+        >
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={[lat, lng]}>
+            <Popup>Parcel Delivery Location</Popup>
+          </Marker>
+        </MapContainer>
+      </Modal>
     </div>
   );
 };

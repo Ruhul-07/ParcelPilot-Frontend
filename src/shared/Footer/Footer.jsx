@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-8">
-      <div className="container mx-auto flex flex-col lg:flex-row justify-evenly items-center px-6">
+      <div className="container mx-auto flex flex-col lg:flex-row justify-evenly px-6">
         {/* Logo and Description */}
         <div className="flex flex-col items-center lg:items-start mb-6 lg:mb-0">
         {/* <CiDeliveryTruck className="text-[#f2ae1c] text-5xl"  /> */}
@@ -34,6 +34,8 @@ const Footer = () => {
 
         {/* Social Media Links */}
         <div className="flex flex-col gap-4 items-center text-3xl">
+          <h2 className="text-lg font-semibold mb-2">Connect With</h2>
+          <div className="flex gap-2">
           <a href="#" className="hover:text-gray-200" aria-label="Facebook">
           <FaFacebook />
           </a>
@@ -43,6 +45,7 @@ const Footer = () => {
           <a href="#" className="hover:text-gray-200" aria-label="LinkedIn">
           <FaLinkedin />
           </a>
+          </div>
         </div>
       </div>
 
