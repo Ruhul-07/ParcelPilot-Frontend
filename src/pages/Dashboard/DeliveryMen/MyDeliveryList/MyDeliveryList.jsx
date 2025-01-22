@@ -118,18 +118,22 @@ const MyDeliveryList = () => {
                   {parcel.deliveryAddress}
                 </td>
                 <td className="border border-gray-300 px-4 py-2 space-x-2">
+                  <>
+                  <div className="flex flex-col justify-center items-center gap-2">
                   <button
-                    className="bg-red-500 text-white px-3 py-1 rounded"
+                    className="bg-red-500 text-white px-3 py-1 rounded w-full"
                     onClick={() => updateParcelStatus(parcel._id, "Cancelled")}
                   >
                     Cancel
                   </button>
                   <button
-                    className="bg-green-500 text-white px-3 py-1 rounded"
+                    className="bg-green-500 text-white px-3 py-1 rounded w-full"
                     onClick={() => updateParcelStatus(parcel._id, "Delivered")}
                   >
                     Deliver
                   </button>
+                  </div>
+                  </>
                 </td>
               </tr>
             ))}

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 import ReviewModal from "../../../../components/ReviewModal";
@@ -78,14 +78,8 @@ const MyParcels = () => {
     navigate(`/dashboard/updateParcel/${parcelId}`);
   };
 
-  // // Handle Review (when status is Delivered)
-  // const handleReview = (parcelId) => {
-  //   Swal.fire("Review", `Leave a review for parcel ${parcelId}`, "info");
-  //   // You can open a modal or navigate to the review page
-  // };
-
   const handleReview = (parcel) => {
-    console.log(parcel)
+    console.log(parcel);
     setSelectedParcel(parcel); // Set the parcel data
     setIsReviewModalOpen(true); // Open the modal
   };
@@ -147,40 +141,44 @@ const MyParcels = () => {
               </td>
               <td className="border px-4 py-2">{parcel.status}</td>
               <td className="border px-4 py-2">
-                <button
-                  className="bg-blue-500 text-white px-4 py-1 rounded"
-                  disabled={parcel.status !== "pending"}
-                  onClick={() => handleUpdate(parcel._id)}
-                >
-                  Update
-                </button>
-                <button
-                  className="bg-red-500 text-white px-4 py-1 rounded ml-2"
-                  disabled={parcel.status !== "pending"}
-                  onClick={() => handleCancel(parcel._id)}
-                >
-                  Cancel
-                </button>
-                {/* Review Button (only if status is delivered) */}
-                {parcel.status === "Delivered" && (
-                  <button
-                    className="bg-yellow-500 text-white px-4 py-1 rounded ml-2"
-                    onClick={() => handleReview(parcel)}
-                  >
-                    Review
-                  </button>
-                )}
+                <div className="flex flex-col justify-center items-center gap-1">
+                  {parcel.status != "Delivered" && (
+                    <>
+                      <button
+                        className="bg-blue-500 text-white px-4 py-1 rounded w-full"
+                        disabled={parcel.status !== "pending"}
+                        onClick={() => handleUpdate(parcel._id)}
+                      >
+                        Update
+                      </button>
+                      <button
+                        className="bg-red-500 text-white px-4 py-1 rounded w-full"
+                        disabled={parcel.status !== "pending"}
+                        onClick={() => handleCancel(parcel._id)}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  )}
 
-                {/* Pay Button (can be added for delivered or pending parcels) */}
-                {(parcel.status === "delivered" ||
-                  parcel.status === "pending") && (
-                  <button
-                    className="bg-green-500 text-white px-4 py-1 rounded ml-2"
-                    onClick={() => handleReview(parcel.deliveryManId)}
-                  >
-                    Pay
-                  </button>
-                )}
+                  {/* Review Button (only if status is delivered) */}
+                  {parcel.status === "Delivered" && (
+                    <button
+                      className="bg-yellow-500 text-white px-4 py-1 rounded w-full"
+                      onClick={() => handleReview(parcel)}
+                    >
+                      Review
+                    </button>
+                  )}
+
+                  {/* Pay Button (can be added for delivered or pending parcels) */}
+                  {(parcel.status === "Delivered" ||
+                    parcel.status === "pending") && (
+                    <Link to="/dashboard/payment" className="bg-green-500 text-white text-center px-4 py-1 rounded w-full">
+                        Pay
+                    </Link>
+                  )}
+                </div>
               </td>
             </tr>
           ))}

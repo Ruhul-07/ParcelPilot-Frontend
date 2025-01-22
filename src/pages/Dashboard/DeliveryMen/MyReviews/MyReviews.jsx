@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
   const axiosPublic = useAxiosPublic();
+  const defailtProfileImg = "./../../../../../public/default_img.jpg"
 
   // Fetch reviews for the logged-in delivery man
   const { data = [], error, isLoading } = useQuery({
@@ -37,7 +38,7 @@ const MyReviews = () => {
           <div key={review._id} className="card bg-white p-4 shadow-md rounded-lg">
             <div className="flex items-center mb-4">
               <img
-                src={review.reviewerImage || "/default-avatar.jpg"}
+                src={review.reviewerImage || defailtProfileImg}
                 alt={review.reviewerName}
                 className="w-12 h-12 rounded-full mr-4"
               />
