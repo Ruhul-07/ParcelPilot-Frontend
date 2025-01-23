@@ -68,13 +68,13 @@ const AllUsers = () => {
               <td className="border px-4 py-2 space-x-2">
                 <button
                   className="px-4 py-2 bg-blue-500 text-white rounded"
-                  onClick={() => handleRoleChange(user._id, 'Delivery Man')}
+                  onClick={() => handleRoleChange(user._id, 'delivery Man')}
                 >
                   Make Delivery Man
                 </button>
                 <button
                   className="px-4 py-2 bg-green-500 text-white rounded"
-                  onClick={() => handleRoleChange(user._id, 'Admin')}
+                  onClick={() => handleRoleChange(user._id, 'admin')}
                 >
                   Make Admin
                 </button>

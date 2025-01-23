@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
 import { FaTruck, FaShieldAlt, FaUsers } from "react-icons/fa";
 import useAxiosPublic from "../hooks/useAxioxPublic";

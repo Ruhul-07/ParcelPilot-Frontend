@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
@@ -34,8 +33,8 @@ const AllParcels = () => {
       const { data } = await axiosSecure.get("/users");
       const deliveryMenData = data.users.filter(
         (user) => user.role === "deliveryMan"
-      ); // Filter users with role "delivery man"
-      console.log("Filtered Delivery Men Data:", deliveryMenData);
+      );
+      // console.log("Filtered Delivery Men Data:", deliveryMenData);
       setDeliveryMen(deliveryMenData);
     } catch (error) {
       console.error("Error fetching delivery men:", error);

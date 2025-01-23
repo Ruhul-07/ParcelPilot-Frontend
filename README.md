@@ -8,17 +8,17 @@ The **ParcelPilot** is an online platform designed to make parcel booking, deliv
 
 ## Admin Login Credentials
 
-- **Admin Username**: admin@parcelapp.com
-- **Admin Password**: Admin123
+- **Admin Username**: admin@gmail.com
+- **Admin Password**: Admin@1
 
 ## Delivery Man Login Credentials
 
-- **Delivery Man Username**: deliveryman@parcelapp.com
-- **Delivery Man Password**: Delivery123
+- **Delivery Man Username**: ridoybabu@gmail.com
+- **Delivery Man Password**: 123456
 
 ## Live Site URL
 
-- [Parcel Management System](https://parcelapp.com)
+- [Parcel Management System](https://parcel-pilot-72663.web.app/)
 
 
 ## Frontend Technology Stack

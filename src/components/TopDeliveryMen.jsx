@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
 import useAxiosPublic from "../hooks/useAxioxPublic";
 import { useQuery } from "@tanstack/react-query";
+import defaultImg from "./../assets/default_img.jpg"
 
 const TopDeliveryMen = () => {
-  const defaultProfileImg = "./../../public/default_img.jpg";
+  // const defaultProfileImg = "./../../public/default_img.jpg";
   const axiosPublic = useAxiosPublic();
 
 
@@ -32,7 +32,7 @@ const TopDeliveryMen = () => {
             className="bg-white rounded-lg shadow-lg p-6 max-w-xs"
           >
             <img
-              src={topMen.profileImg || defaultProfileImg}
+              src={topMen.profileImg || defaultImg}
               alt={deliveryMan.name}
               className="w-24 h-24 rounded-full mx-auto mb-4"
             />

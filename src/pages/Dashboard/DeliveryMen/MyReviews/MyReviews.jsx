@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import defaultImg from "../../../../assets/default_img.jpg";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -38,7 +38,7 @@ const MyReviews = () => {
           <div key={review._id} className="card bg-white p-4 shadow-md rounded-lg">
             <div className="flex items-center mb-4">
               <img
-                src={review.reviewerImage || defailtProfileImg}
+                src={review.reviewerImage || defaultImg}
                 alt={review.reviewerName}
                 className="w-12 h-12 rounded-full mr-4"
               />

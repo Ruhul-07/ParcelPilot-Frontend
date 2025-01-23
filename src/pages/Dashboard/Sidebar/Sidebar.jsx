@@ -107,7 +107,7 @@ const Sidebar = ({ role }) => {
                 to={item.path}
                 className="hover:bg-gray-700 p-2 block rounded"
                 activeClassName="bg-gray-700"
-                onClick={() => setIsOpen(false)} // Close sidebar on mobile when a link is clicked
+                onClick={() => setIsOpen(false)}
               >
                 <div className="flex gap-3 items-center">
                   {item.icon} {/* Display the icon */}
@@ -127,7 +127,7 @@ const Sidebar = ({ role }) => {
                 to={item.path}
                 className="hover:bg-gray-700 p-2 block rounded"
                 activeClassName="bg-gray-700"
-                onClick={() => setIsOpen(false)} // Close sidebar on mobile when a link is clicked
+                onClick={() => setIsOpen(false)}
               >
                 <div className="flex gap-3 items-center">
                   {item.icon} {/* Display the icon */}
