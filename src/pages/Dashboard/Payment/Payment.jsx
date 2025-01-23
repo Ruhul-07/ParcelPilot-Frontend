@@ -4,7 +4,7 @@ import CheckOutForm from "./CheckOutForm";
 import { useLocation } from "react-router-dom";
 
 // TODO: add publishable key
-const stripePromise = loadStripe('pk_test_51QhqazC6LzziWmRMM9OheJsRmx3p930u1TjgXOx6p0aimoSHLvr6hscS7NOyENs2RMdD6AG8ZYIIrQSJqptsW8J000uW6Upqxe');
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gatewy_PK);
 const Payment = () => {
     const location = useLocation();
   const parcel = location.state?.parcel;

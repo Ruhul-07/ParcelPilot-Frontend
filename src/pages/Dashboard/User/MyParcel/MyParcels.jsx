@@ -56,8 +56,8 @@ const MyParcels = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const response = await axios.patch(
-            `http://localhost:5000/parcels/${parcelId}`,
+          const response = await axiosPublic.patch(
+            `/parcels/${parcelId}`,
             { status: "canceled" }
           );
           if (response.status === 200) {

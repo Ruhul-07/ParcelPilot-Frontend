@@ -3,15 +3,13 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
-// import 'sweetalert2/dist/sweetalert2.min.css';  // Import SweetAlert2 styles
 
 const image_hosting_key = import.meta.env.VITE_IMG_BB_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
-console.log(image_hosting_api);
 const MyProfile = () => {
   const { user, updateUserProfile } = useContext(AuthContext);
-  console.log(user?.photoURL);
+  // console.log(user?.photoURL);
   const [profileImg, setProfileImg] = useState(user?.profileImg || "");
   const [name, setName] = useState(user?.name || "");
   const [isEditing, setIsEditing] = useState(false);
@@ -19,20 +17,20 @@ const MyProfile = () => {
   useEffect(() => {
     setProfileImg(user?.photoURL);
     setName(user?.displayName);
-  }, [user]);
+  }, [user]); 
 
   const axiosPublic = useAxiosPublic();
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
+    // console.log(file);
     if (file) {
       try {
         const formData = new FormData();
         formData.append("image", file);
 
         const response = await axiosPublic.post(image_hosting_api, formData);
-        console.log(response);
+        // console.log(response);
         setProfileImg(response.data.data.url);
         Swal.fire("Success!", "Profile image updated!", "success");
       } catch (err) {

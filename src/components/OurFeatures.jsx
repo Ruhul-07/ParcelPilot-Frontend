@@ -1,34 +1,30 @@
 import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
-import { FaTruck, FaShieldAlt, FaUsers } from "react-icons/fa"; // Icons for the features
+import { FaTruck, FaShieldAlt, FaUsers } from "react-icons/fa";
 import useAxiosPublic from "../hooks/useAxioxPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const OurFeatures = () => {
-    const axiosPublic = useAxiosPublic()
-  const [stats, setStats] = useState({
-    totalParcelsBooked: 0,
-    totalParcelsDelivered: 0,
-    totalUsers: 0,
+  const axiosPublic = useAxiosPublic();
+
+  const { isLoading, error, data: stats = [] } = useQuery({
+    queryKey: ["stats"],
+    queryFn: async () => {
+        const res = await axiosPublic.get('/app-stats');
+        return res.data;
+    }
   });
 
-  // Fetch app statistics from the server
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await axiosPublic.get("/app-stats");
-        const data = response.data;
-        setStats(data);
-      } catch (error) {
-        console.error("Error fetching app stats:", error);
-      }
-    };
-    fetchStats();
-  }, []);
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="py-16 bg-gray-50">
       <div className="max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-12">Why Choose Our Delivery System?</h2>
+        <h2 className="text-3xl font-bold mb-12">
+          Why Choose Our Delivery System?
+        </h2>
 
         {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-20">
@@ -36,21 +32,24 @@ const OurFeatures = () => {
             <FaShieldAlt className="text-4xl text-blue-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Parcel Safety</h3>
             <p className="text-gray-600">
-              We ensure that your parcels are delivered safely and securely to their destination.
+              We ensure that your parcels are delivered safely and securely to
+              their destination.
             </p>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
             <FaTruck className="text-4xl text-green-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Super Fast Delivery</h3>
             <p className="text-gray-600">
-              Our delivery system guarantees fast delivery, so you can send and receive parcels in no time.
+              Our delivery system guarantees fast delivery, so you can send and
+              receive parcels in no time.
             </p>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center">
             <FaUsers className="text-4xl text-purple-500 mb-4" />
             <h3 className="text-xl font-semibold mb-2">Trusted by Thousands</h3>
             <p className="text-gray-600">
-              Join thousands of satisfied users who trust us for their parcel delivery needs.
+              Join thousands of satisfied users who trust us for their parcel
+              delivery needs.
             </p>
           </div>
         </div>
@@ -70,7 +69,9 @@ const OurFeatures = () => {
             </p>
           </div>
           <div className="bg-white shadow-lg rounded-lg p-6 text-center">
-            <h3 className="text-xl font-semibold mb-2">Total Parcels Delivered</h3>
+            <h3 className="text-xl font-semibold mb-2">
+              Total Parcels Delivered
+            </h3>
             <p className="text-gray-600">
               <CountUp
                 start={0}

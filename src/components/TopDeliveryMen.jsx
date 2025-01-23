@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import useAxiosPublic from "../hooks/useAxioxPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const TopDeliveryMen = () => {
   const defaultProfileImg = "./../../public/default_img.jpg";
-  const [topDeliveryMen, setTopDeliveryMen] = useState([]);
   const axiosPublic = useAxiosPublic();
 
-  useEffect(() => {
-    const fetchTopDeliveryMen = async () => {
-      try {
-        const response = await axiosPublic.get("/top-delivery-men");
-        setTopDeliveryMen(response.data); // Store the top delivery men data
-      } catch (error) {
-        console.error("Error fetching top delivery men:", error);
-      }
-    };
-    fetchTopDeliveryMen();
-  }, []);
+
+  const { isLoading, error, data: topMen = [] } = useQuery({
+    queryKey: ["topMen"],
+    queryFn: async () => {
+        const res = await axiosPublic.get('/top-delivery-men');
+        return res.data;
+    }
+  });
+
+  if (isLoading) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
 
   return (
     <section className="mt-12 mb-10">
@@ -25,26 +26,26 @@ const TopDeliveryMen = () => {
         Top Delivery Men
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {topDeliveryMen.map((deliveryMan, index) => (
+        {topMen.map((deliveryMan, index) => (
           <div
             key={index}
             className="bg-white rounded-lg shadow-lg p-6 max-w-xs"
           >
             <img
-              src={deliveryMan.profileImg || defaultProfileImg}
+              src={topMen.profileImg || defaultProfileImg}
               alt={deliveryMan.name}
               className="w-24 h-24 rounded-full mx-auto mb-4"
             />
             <h3 className="text-xl font-semibold text-center">
-              {deliveryMan.name}
+              {topMen.name}
             </h3>
             <p className="text-center mt-2">
               <span className="font-semibold">Parcels Delivered:</span>{" "}
-              {deliveryMan.parcelsDelivered}
+              {topMen.parcelsDelivered}
             </p>
             <p className="text-center mt-2">
               <span className="font-semibold">Average Rating:</span>{" "}
-              {deliveryMan.averageReview} / 5
+              {topMen.averageReview} / 5
             </p>
           </div>
         ))}

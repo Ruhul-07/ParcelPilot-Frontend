@@ -68,25 +68,25 @@ const BookParcel = () => {
 
   // Show map in the modal when the user clicks the button
   const handleModalOpen = () => {
-    const latInput = parseFloat(watch("latitude")) || 23.8103; // Fallback to default if invalid
-    const lngInput = parseFloat(watch("longitude")) || 90.4125; // Fallback to default if invalid
+    const latInput = parseFloat(watch("latitude")) || 23.8103; 
+    const lngInput = parseFloat(watch("longitude")) || 90.4125; 
     setLat(latInput);
     setLng(lngInput);
-    setOpenModal(true); // Open the modal
+    setOpenModal(true);
   };
 
-  const handleModalClose = () => setOpenModal(false); // Close the modal
+  const handleModalClose = () => setOpenModal(false);
 
   useEffect(() => {
     if (openModal) {
       setTimeout(() => {
         const map = document.querySelector(".leaflet-container");
         if (map) {
-          map.invalidateSize(); // Ensure the map is resized after modal opens
+          map.invalidateSize();
         }
       }, 100);
     }
-  }, [openModal]); // Dependency on openModal to trigger when the modal opens
+  }, [openModal]);
 
   return (
     <div className="container mx-auto py-8">
@@ -233,8 +233,8 @@ const BookParcel = () => {
             type="text"
             {...register("latitude", { required: "Latitude is required" })}
             className="input input-bordered w-full"
-            placeholder="Enter Latitude" // Placeholder to guide the user
-            defaultValue="23.8103" //
+            placeholder="Enter Latitude"
+            defaultValue="23.8103" 
           />
           {errors.latitude && (
             <p className="text-red-500 text-sm">{errors.latitude.message}</p>
@@ -250,8 +250,8 @@ const BookParcel = () => {
             type="text"
             {...register("longitude", { required: "Longitude is required" })}
             className="input input-bordered w-full"
-            placeholder="Enter Longitude" // Placeholder to guide the user
-            defaultValue="90.4125" // Default Longitude (for example)
+            placeholder="Enter Longitude" 
+            defaultValue="90.4125" 
           />
           {errors.longitude && (
             <p className="text-red-500 text-sm">{errors.longitude.message}</p>
@@ -312,8 +312,8 @@ const BookParcel = () => {
           center={[lat, lng]}
           zoom={13}
           style={{
-            width: "100%", // Full width of modal
-            height: "400px", // Ensure a fixed height for the map
+            width: "100%",
+            height: "400px",
           }}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
