@@ -18,7 +18,7 @@ The **ParcelPilot** is an online platform designed to make parcel booking, deliv
 
 ## Live Site URL
 
-- [Parcel Management System](https://parcel-pilot-72663.web.app/)
+- [ParcelPilot](https://parcel-pilot-72663.web.app/)
 
 
 ## Frontend Technology Stack
