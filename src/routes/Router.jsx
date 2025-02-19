@@ -19,6 +19,7 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/PaymentSuccess/PaymentSuccess";
 import AboutUs from "../pages/Home/About/AboutUs";
 import ContactUs from "../pages/Home/Contact/ContactUs";
+import OverView from "../pages/Dashboard/Sidebar/OverView";
 
 const router = createBrowserRouter([
     {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
             {
                 path: 'my-reviews',
                 element: <MyReviews></MyReviews>
+            },
+            {
+                path: 'overView',
+                element: <OverView></OverView>
             }
         ]
     }

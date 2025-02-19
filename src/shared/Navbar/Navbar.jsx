@@ -104,7 +104,7 @@ const Navbar = () => {
                   <li className="font-bold p-2">{user?.displayName || "User"}</li>
                   <li>
                     <Link
-                      to="/dashboard"
+                      to="dashboard/overView"
                       className="block hover:bg-gray-100 p-2 rounded-md transition-all"
                     >
                       Dashboard
