@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
@@ -15,6 +16,28 @@ export default {
        },
     },
   },
+  // theme: {
+  //   extend: {
+  //     colors: {
+  //       background: {
+  //         light: "#ffffff",
+  //         dark: "#1a1a2e",
+  //       },
+  //       text: {
+  //         light: "#050315",
+  //         dark: "#ffffff",
+  //       },
+  //       primary: {
+  //         light: "#1E40AF",
+  //         dark: "#4f46e5",
+  //       },
+  //       secondary: {
+  //         light: "#dedcff",
+  //         dark: "#3b3b58",
+  //       },
+  //     },
+  //   },
+  // },
   plugins: [require('daisyui'),],
 }
 

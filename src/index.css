@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-white text-black dark:bg-gray-900 dark:text-white;
+}
+
+nav, footer {
+  @apply bg-base-100 dark:bg-gray-800 shadow-md transition-colors;
+}
+
+.navbar, .section, .footer, .card {
+  @apply transition-colors duration-300 bg-white text-black dark:bg-gray-800 dark:text-white;
+}
+
+button {
+  @apply bg-gray-200 text-black dark:bg-gray-700 dark:text-white transition-colors;
+}
+
+.dark .card {
+  @apply bg-white text-black shadow-lg dark:bg-gray-800 dark:text-white dark:shadow-gray-700;
+}
+
 @keyframes fadeIn {
     from {
       opacity: 0;

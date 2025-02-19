@@ -29,7 +29,7 @@ const TopDeliveryMen = () => {
         {topMen.map((deliveryMan, index) => (
           <div
             key={index}
-            className="bg-white rounded-lg shadow-lg p-6 max-w-xs"
+            className="card bg-white rounded-lg shadow-lg p-6 max-w-xs"
           >
             <img
               src={topMen.profileImg || defaultImg}

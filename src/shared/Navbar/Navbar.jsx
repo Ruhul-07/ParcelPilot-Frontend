@@ -2,12 +2,15 @@ import { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Parcelpilot-new-newest.png";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useTheme } from "../../providers/ThemeContext";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
   const location = useLocation();
+  const { isDark, toggleTheme } = useTheme();
+
 
   const handleLogOut = () => {
     logOut()
@@ -128,6 +131,13 @@ const Navbar = () => {
             </Link>
           )}
         </div>
+
+        <button
+        onClick={toggleTheme}
+        className="p-2 ml-4 rounded-md bg-gray-200 dark:bg-gray-800 text-black dark:text-white"
+      >
+        {isDark ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      </button>
 
         {/* Hamburger Menu for Mobile */}
         <button
