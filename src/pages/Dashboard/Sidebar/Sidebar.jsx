@@ -8,9 +8,7 @@ const Sidebar = ({ role }) => {
   const [isOpen, setIsOpen] = useState(false);
   const defaultMenu = [
     { name: "Home", path: "/", icon: <FaHome /> },
-    { name: "Analytics", path: "/dashboard/analytics", icon: <FaChartBar /> },
     { name: "Profile", path: "/dashboard/profile", icon: <FaUserAlt /> },
-    { name: "Settings", path: "/dashboard/settings", icon: <FaCog /> },
   ];
 
   const roleBasedMenu = {

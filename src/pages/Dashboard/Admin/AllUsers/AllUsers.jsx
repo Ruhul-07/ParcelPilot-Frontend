@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import LoadingSpinner from '../../../../components/LoadingSpinner';
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const axiosSecure = useAxiosSecure();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 5;
 
   useEffect(() => {
-    fetchUsers(currentPage);
+    fetchUsers(currentPage); 
   }, [currentPage]);
 
   const fetchUsers = async (page) => {
+    setLoading(true)
     try {
       const { data } = await axiosSecure.get(`/users?page=${page}&limit=${limit}`);
       setUsers(data.users);
@@ -21,6 +24,7 @@ const AllUsers = () => {
     } catch (err) {
       console.error('Error fetching users:', err);
     }
+    setLoading(false)
   };
 
   const handleRoleChange = async (userId, role) => {
@@ -48,6 +52,7 @@ const AllUsers = () => {
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">All Users</h2>
+      {loading && <div className="text-center"><LoadingSpinner></LoadingSpinner></div>}
       <table className="min-w-full table-auto border-collapse border border-gray-300">
         <thead>
           <tr className="bg-gray-200">

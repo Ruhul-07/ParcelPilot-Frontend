@@ -4,6 +4,7 @@ import { AuthContext } from "../../../../providers/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 const MyDeliveryList = () => {
   const { user } = useContext(AuthContext);
@@ -52,7 +53,7 @@ const MyDeliveryList = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div><LoadingSpinner></LoadingSpinner></div>;
   if (error) return <div>Error loading parcels: {error.message}</div>;
 
   // Check if the data is an array before rendering

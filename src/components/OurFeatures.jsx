@@ -2,6 +2,7 @@ import CountUp from "react-countup";
 import { FaTruck, FaShieldAlt, FaUsers } from "react-icons/fa";
 import useAxiosPublic from "../hooks/useAxioxPublic";
 import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "./LoadingSpinner";
 
 const OurFeatures = () => {
   const axiosPublic = useAxiosPublic();
@@ -14,7 +15,7 @@ const OurFeatures = () => {
     }
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   if (error) return "An error has occurred: " + error.message;
 

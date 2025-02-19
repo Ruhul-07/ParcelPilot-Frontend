@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ApexCharts from 'react-apexcharts';
 import useAxiosPublic from '../../../../hooks/useAxioxPublic';
+import LoadingSpinner from '../../../../components/LoadingSpinner';
 
 const Statistics = () => {
   const [bookingsData, setBookingsData] = useState([]);
@@ -87,13 +88,13 @@ const Statistics = () => {
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><LoadingSpinner></LoadingSpinner></div>;
   }
 
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Statistics</h2>
-
+      {/* {loading && <div className="text-center"><LoadingSpinner></LoadingSpinner></div>} */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Bar Chart for Bookings by Date */}
         <div className="p-4 bg-white shadow-md rounded-lg">

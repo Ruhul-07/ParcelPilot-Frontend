@@ -1,6 +1,7 @@
 import useAxiosPublic from "../hooks/useAxioxPublic";
 import { useQuery } from "@tanstack/react-query";
 import defaultImg from "./../assets/default_img.jpg"
+import LoadingSpinner from "./LoadingSpinner";
 
 const TopDeliveryMen = () => {
   // const defaultProfileImg = "./../../public/default_img.jpg";
@@ -15,7 +16,7 @@ const TopDeliveryMen = () => {
     }
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   if (error) return "An error has occurred: " + error.message;
 

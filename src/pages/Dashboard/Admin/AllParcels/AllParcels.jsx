@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 const AllParcels = () => {
   const [parcels, setParcels] = useState([]);
@@ -82,7 +83,7 @@ const AllParcels = () => {
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">All Parcels</h2>
 
-      {loading && <div className="text-center">Loading...</div>}
+      {loading && <div className="text-center"><LoadingSpinner></LoadingSpinner></div>}
 
       <div className="overflow-x-auto">
         <table className="table-auto w-full border-collapse border border-gray-300">

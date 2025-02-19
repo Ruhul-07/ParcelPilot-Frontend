@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 const AllDeliveryMen = () => {
   const [deliveryMen, setDeliveryMen] = useState([]);
@@ -22,7 +23,7 @@ const AllDeliveryMen = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-10">Loading...</div>;
+    return <div className="text-center mt-10"><LoadingSpinner></LoadingSpinner></div>;
   }
 
   return (

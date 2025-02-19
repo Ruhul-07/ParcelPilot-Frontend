@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../../providers/AuthProvider";
 import useAxiosPublic from "../../../../hooks/useAxioxPublic";
 import defaultImg from "../../../../assets/default_img.jpg";
+import LoadingSpinner from "../../../../components/LoadingSpinner";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -22,7 +23,7 @@ const MyReviews = () => {
     enabled: !!user?.email, // Only run the query if the user is authenticated
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div><LoadingSpinner></LoadingSpinner></div>;
   if (error) return <div>Error loading reviews: {error.message}</div>;
 
   // Handle the case where reviews might be empty or not an array

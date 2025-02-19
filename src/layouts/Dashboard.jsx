@@ -5,6 +5,7 @@ import Sidebar from "../pages/Dashboard/Sidebar/Sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../providers/AuthProvider";
 import { Helmet } from "react-helmet-async";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -39,7 +40,7 @@ const Dashboard = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner></LoadingSpinner>;
   }
 
   if (error) {
