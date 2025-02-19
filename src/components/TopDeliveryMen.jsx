@@ -21,8 +21,8 @@ const TopDeliveryMen = () => {
 
 
   return (
-    <section className="mt-12 mb-10">
-      <h2 className="text-3xl font-semibold text-center mb-8">
+    <section className="max-w-6xl mx-auto mb-6">
+      <h2 className="text-3xl font-semibold text-center mb-12">
         Top Delivery Men
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
