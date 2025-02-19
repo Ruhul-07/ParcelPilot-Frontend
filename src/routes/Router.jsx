@@ -18,6 +18,7 @@ import MyReviews from "../pages/Dashboard/DeliveryMen/MyReviews/MyReviews";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/PaymentSuccess/PaymentSuccess";
 import AboutUs from "../pages/Home/About/AboutUs";
+import ContactUs from "../pages/Home/Contact/ContactUs";
 
 const router = createBrowserRouter([
     {
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "contact",
-                element: <h1>contact</h1>
+                element: <ContactUs></ContactUs>
             }
         ]
     },
