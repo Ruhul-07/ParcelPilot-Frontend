@@ -17,6 +17,7 @@ import AllParcels from "../pages/Dashboard/Admin/AllParcels/AllParcels";
 import MyReviews from "../pages/Dashboard/DeliveryMen/MyReviews/MyReviews";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/PaymentSuccess/PaymentSuccess";
+import AboutUs from "../pages/Home/About/AboutUs";
 
 const router = createBrowserRouter([
     {
@@ -37,7 +38,7 @@ const router = createBrowserRouter([
             },
             {
                 path:"about",
-                element: <h1>about</h1>
+                element: <AboutUs></AboutUs>
             },
             {
                 path: "contact",
