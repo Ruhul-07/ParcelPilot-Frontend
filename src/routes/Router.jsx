@@ -20,6 +20,7 @@ import PaymentSuccess from "../pages/Dashboard/PaymentSuccess/PaymentSuccess";
 import AboutUs from "../pages/Home/About/AboutUs";
 import ContactUs from "../pages/Home/Contact/ContactUs";
 import OverView from "../pages/Dashboard/Sidebar/OverView";
+import PageNotFound from "../components/PageNotFound";
 
 const router = createBrowserRouter([
     {
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
                 element: <OverView></OverView>
             }
         ]
+    },
+    {
+        path: '*',
+        element:<PageNotFound></PageNotFound>
     }
 ]);
 export default router;
