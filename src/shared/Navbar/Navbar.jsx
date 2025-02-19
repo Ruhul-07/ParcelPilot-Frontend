@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Parcelpilot-new-newest.png";
 import { AuthContext } from "../../providers/AuthProvider";
 
@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  console.log(user)
+  const location = useLocation();
 
   const handleLogOut = () => {
     logOut()
@@ -22,9 +22,12 @@ const Navbar = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
+  const isActive = (path) => location.pathname === path;
+
   return (
     <nav className="bg-base-100 bg-opacity-90 shadow-md sticky top-0 z-20">
-      <div className="container mx-auto flex justify-between items-center py-4 px-6">
+      <div className="max-w-6xl mx-auto flex justify-between items-center py-4">
         {/* Logo Area */}
         <div className="flex items-center gap-2">
           <Link to="/" className="text-2xl font-bold flex items-center gap-2">
@@ -42,7 +45,9 @@ const Navbar = () => {
         >
           <Link
             to="/"
-            className="btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300"
+            className={`btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300 ${
+              isActive("/") ? "text-white bg-primary" : ""
+            }`}
             onClick={closeMobileMenu}
           >
             Home
@@ -50,7 +55,9 @@ const Navbar = () => {
 
           <Link
             to="/about"
-            className="btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300"
+            className={`btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300 ${
+              isActive("/about") ? "text-white bg-primary" : ""
+            }`}
             onClick={closeMobileMenu}
           >
             About
@@ -58,7 +65,9 @@ const Navbar = () => {
 
           <Link
             to="/contact"
-            className="btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300"
+            className={`btn btn-ghost hover:bg-primary hover:text-white transition-all duration-300 ${
+              isActive("/contact") ? "text-white bg-primary" : ""
+            }`}
             onClick={closeMobileMenu}
           >
             Contact

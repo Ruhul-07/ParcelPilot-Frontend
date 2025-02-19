@@ -131,8 +131,11 @@ Make sure you have the following installed:
 3. **Set up environment variables**:
 
    MONGO_URI=your_mongodb_connection_string
+   
    JWT_SECRET=your_jwt_secret_key
+   
    STRIPE_SECRET_KEY=your_stripe_secret_key
+   
    FIREBASE_CONFIG=your_firebase_config
-4. **Run the application**:
+5. **Run the application**:
     npm run dev
